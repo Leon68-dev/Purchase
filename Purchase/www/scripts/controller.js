@@ -8,8 +8,8 @@ function hideAll() {
         return false;
     });
 
-    $("#frmWords").hide();
-    $("#frmWords").submit(function () {
+    $("#frmProduct").hide();
+    $("#frmProduct").submit(function () {
         return false;
     });
 
@@ -28,13 +28,13 @@ function hideAll() {
         return false;
     });
 
-    $("#frmAddWord").hide();
-    $("#frmAddWord").submit(function () {
+    $("#frmAddProduct").hide();
+    $("#frmAddProduct").submit(function () {
         return false;
     });
     
-    $("#frmEditWord").hide();
-    $("#frmEditWord").submit(function () {
+    $("#frmEditProduct").hide();
+    $("#frmEditProduct").submit(function () {
         return false;
     });
 
@@ -77,10 +77,10 @@ function addStrValue(value_text, value_text2, id, isChecked) {
     var str = "<tr ><td width='20%' style='text-align:center'><input type='checkbox' style='zoom:3' onclick='onClickCheckBox(this);' value ='"
             + id + "' " + checkedValue(isChecked)
             + "></td><td style='word-wrap:break-word'>" + value_t
-            + "</td><td width='10%'><a href='#' class='ui-btn ui-corner-all ui-icon-edit ui-btn-icon-notext ui-btn-inline' onclick='editWord(" + id + ");'>Edit</a>"
-            + "<a href='#' class='ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-inline' onclick='delWord(" + id + ");'>Delete</a>"
+            + "</td><td width='10%'><a href='#' class='ui-btn ui-corner-all ui-icon-edit ui-btn-icon-notext ui-btn-inline' onclick='editProduct(" + id + ");'>Edit</a>"
+            + "<a href='#' class='ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-inline' onclick='delProduct(" + id + ");'>Delete</a>"
             + "</td></tr>";
-    $("#gridWords > tbody:last").after(str);
+    $("#gridProduct > tbody:last").after(str);
 }
 
 function addStrValueCategories(id, name) {
@@ -92,24 +92,23 @@ function addStrValueCategories(id, name) {
     $("#gridCategories > tbody:last").after(str);
 }
 
-function editWord(idWord) {
-    selectWordById(idWord, function (res) {
+function editProduct(idProduct) {
+    selectProductById(idProduct, function (res) {
         setDataToSelect('selectedGroupsEdit', res.rows.item(0).code);
-        $("#inputEnglishWordEdit").val(res.rows.item(0).value_w);
-        $("#inputRussianWordEdit").val(res.rows.item(0).value_w2);
-        editWordID = idWord;
-        onClickButton(BTN_EDT_WORD);
+        $("#inputProductNameEdit").val(res.rows.item(0).value_w);
+        editProductID = idProduct;
+        onClickButton(BTN_EDT_PRODUCT);
     });
 }
 
-function delWord(idWord) {
+function delProduct(idProduct) {
     var r = confirm('Would you like to delete data?');
     if (r == true) {
-        selectWordById(idWord, function (res) {
+        selectProductById(idProduct, function (res) {
             var idType = res.rows.item(0).code;
-            deleteRelation(idWord, idType, function (res2) {
-                deleteWordById(idWord, function (res3) {
-                    setGridWordsBody(currentWordType);
+            deleteRelation(idProduct, idType, function (res2) {
+                deleteProductById(idProduct, function (res3) {
+                    setGridProductBody(currentProductType);
                     window.plugins.toast.showShortBottom("Data was deleted");
                 });
             });
@@ -126,34 +125,23 @@ function getToastCountItems(itemsFound) {
     }
 }
 
-function setGridWordsBody(wordType) {
+function setGridProductBody(productType) {
     $("#searchText").val("");
     clearTBody();
-    //currentWordType = wordType;
-    //if (wordType == NEW) {
-    //    tx.executeSql("select * from vrows where code = " + NEW + " order by id desc;", [], function (tx, res) {
-    //        var cnt = res.rows.length;
-    //        for (i = 0; i < cnt; i++) {
-    //            addStrValue(res.rows.item(i).value_w, res.rows.item(i).value_w2, res.rows.item(i).id, res.rows.item(i).is_checked);
-    //        }
-    //        getToastCountItems(cnt);
-    //    },function(tx, error) {
-    //        console.log('SELECT error: ' + error.message);
-    //    });
-    //}  else 
-    if (wordType == CHK) {
-        selectWordsCHK(function(res){
+
+    if (productType == CHK) {
+        selectProductCHK(function(res){
             var cnt = res.rows.length;
             for (i = 0; i < cnt; i++) {
-                addStrValue(res.rows.item(i).value_w, res.rows.item(i).value_w2, res.rows.item(i).id, res.rows.item(i).is_checked);
+                addStrValue(res.rows.item(i).value_w, res.rows.item(i).id, res.rows.item(i).is_checked);
             }
             getToastCountItems(cnt);
         });
     } else {
-        selectWordsByCode(wordType, function (res) {
+        selectProductByCode(productType, function (res) {
             var cnt = res.rows.length;
             for (i = 0; i < cnt; i++) {
-                addStrValue(res.rows.item(i).value_w, res.rows.item(i).value_w2, res.rows.item(i).id, res.rows.item(i).is_checked);
+                addStrValue(res.rows.item(i).value_w, res.rows.item(i).id, res.rows.item(i).is_checked);
             }
             getToastCountItems(cnt);
         });
@@ -163,11 +151,11 @@ function setGridWordsBody(wordType) {
 function onClickCheckBox(param) {
     var id = param.value;
     var isChecked = param.checked;
-    setWordCheckBox(id, isChecked);
+    setProductCheckBox(id, isChecked);
 }
 
 function onClickButton(index) {
-    if (index == BTN_ADD_WORD || index == BTN_CHK_WORDS || index == BTN_ALL_WORDS || index == BTN_CATEG_VIEW) {
+    if (index == BTN_ADD_PRODUCT || index == BTN_CHK_PRODUCT || index == BTN_ALL_PRODUCT || index == BTN_CATEG_VIEW) {
         typeOpen = index;
     }
     currentForm = index;
@@ -175,7 +163,7 @@ function onClickButton(index) {
 }
 
 function clearTBody() {
-    var table = document.getElementById("gridWords");
+    var table = document.getElementById("gridProduct");
     for (var i = table.rows.length - 1; i >= 0; i--) {
         table.deleteRow(i);
     }
@@ -195,37 +183,27 @@ function getSearchText() {
 
 function onClickButtonFind() {
     clearTBody();
-    if (currentWordType == ALL) {
-        selectFindWordsAll(getSearchText(), function (res) {
+    if (currentProductType == ALL) {
+        selectFindProductAll(getSearchText(), function (res) {
             var cnt = res.rows.length;
             for (i = 0; i < cnt; i++) {
-                addStrValue(res.rows.item(i).value_w, res.rows.item(i).value_w2, res.rows.item(i).id, res.rows.item(i).is_checked);
+                addStrValue(res.rows.item(i).value_w, res.rows.item(i).id, res.rows.item(i).is_checked);
             }
             getToastCountItems(cnt);
         });
-     //} else if (currentWordType == NEW) {
-        //    tx.executeSql("select * from vrows where code = " + NEW + " and (value_w like'%" + getSearchText() + "%' or value_w2 like'%" + getSearchText() + "%') order by id desc;", [], function (tx, res) {
-        //        var cnt = res.rows.length;
-        //        for (i = 0; i < cnt; i++) {
-        //            addStrValue(res.rows.item(i).value_w, res.rows.item(i).value_w2, res.rows.item(i).id, res.rows.item(i).is_checked);
-        //        }
-        //        getToastCountItems(cnt);
-        //    }, function (tx, error) {
-        //        console.log('SELECT error: ' + error.message);
-        //    });
-    } else if (currentWordType == CHK) {
-        selectFindWordsCHK(getSearchText(), function (res) {
+    } else if (currentProductType == CHK) {
+        selectFindProductCHK(getSearchText(), function (res) {
             var cnt = res.rows.length;
             for (i = 0; i < cnt; i++) {
-                addStrValue(res.rows.item(i).value_w, res.rows.item(i).value_w2, res.rows.item(i).id, res.rows.item(i).is_checked);
+                addStrValue(res.rows.item(i).value_w, res.rows.item(i).id, res.rows.item(i).is_checked);
             }
             getToastCountItems(cnt);
         });
     } else {
-        selectFindWordsByType(currentWordType, searchText, function (res) {
+        selectFindProductByType(currentProductType, searchText, function (res) {
             var cnt = res.rows.length;
             for (i = 0; i < cnt; i++) {
-                addStrValue(res.rows.item(i).value_w, res.rows.item(i).value_w2, res.rows.item(i).id, res.rows.item(i).is_checked);
+                addStrValue(res.rows.item(i).value_w, res.rows.item(i).id, res.rows.item(i).is_checked);
             }
             getToastCountItems(cnt);
         });
@@ -234,7 +212,7 @@ function onClickButtonFind() {
 
 function deviceReady() {
     hideAll();
-    setGridWordsBody(ALL);
+    setGridProductBody(ALL);
     $("#frmList").show();
     createTablesWithCheck(0);
 }
@@ -288,10 +266,10 @@ function exportDatabase() {
         var destination = cordova.file.externalRootDirectory;
         window.resolveLocalFileSystemURL(source, function (fs) {
             window.resolveLocalFileSystemURL(destination, function (directoryEntry) {
-                var filename = 'english_' + dateFormat() + '.db';
+                var filename = 'purchase_' + dateFormat() + '.db';
                 fs.copyTo(directoryEntry, filename, function () { }, failFiles);
                 fs.copyTo(directoryEntry, model_dbname_backup, function () {
-                    showCurrentForm(BTN_ALL_WORDS);
+                    showCurrentForm(BTN_ALL_PRODUCT);
                     alert("Export ok");
                 }, failFiles);
             }, failFiles);
@@ -310,7 +288,7 @@ function importDatabase() {
         window.resolveLocalFileSystemURL(source, function (fs) {
             window.resolveLocalFileSystemURL(destination, function (directoryEntry) {
                 fs.copyTo(directoryEntry, model_dbname, function () {
-                    showCurrentForm(BTN_ALL_WORDS);
+                    showCurrentForm(BTN_ALL_PRODUCT);
                     alert("Import ok");
                 }, failFiles);
             }, failFiles);
@@ -336,83 +314,78 @@ function setDataToSelect(nameSelector, selectID) {
     });
 }
 
-function saveNewWord() {
-    var value_w = $("#inputEnglishWord").val();
-    var value_w2 = $("#inputRussianWord").val();
+function saveNewProduct() {
+    var value_w = $("#inputProductName").val();
     var id_type = $("#selectedGroups").val();
 
-    if (value_w && value_w2) {
-        insertWordById(0, value_w, value_w2, 0, function (res) {
-            selectMaxWordsID(function (res) {
+    if (value_w) {
+        insertProductById(0, value_w, 0, function (res) {
+            selectMaxProductID(function (res) {
                 if (res && res.rows && res.rows.length) {
-                    var id_words = res.rows.item(0).maxID;
-                    insertRelation(id_words, id_type, function (res3) {
-                        $("#inputEnglishWord").val('');
-                        $("#inputRussianWord").val('');
-                        currentForm = BTN_ADD_WORD;
-                        showCurrentForm(BTN_ADD_WORD);
+                    var id_product = res.rows.item(0).maxID;
+                    insertRelation(id_product, id_type, function (res3) {
+                        $("#inputProductName").val('');
+                        currentForm = BTN_ADD_PRODUCT;
+                        showCurrentForm(BTN_ADD_PRODUCT);
                         window.plugins.toast.showShortBottom("Data was saved");
                     });
                 }
             });
         })
     } else {
-        $("#inputEnglishWord").val('');
-        $("#inputRussianWord").val('');
-        currentForm = BTN_ADD_WORD;
-        showCurrentForm(BTN_ADD_WORD);
+        $("#inputProductName").val('');
+        currentForm = BTN_ADD_PRODUCT;
+        showCurrentForm(BTN_ADD_PRODUCT);
         window.plugins.toast.showShortBottom("Data was not saved");
     }
 }
 
-function cancelNewWord() {
-    $("#inputEnglishWord").val('');
-    $("#inputRussianWord").val('');
-    showCurrentForm(BTN_ADD_WORD);
+function cancelNewProduct() {
+    $("#inputProductName").val('');
+    showCurrentForm(BTN_ADD_PRODUCT);
     window.plugins.toast.showShortBottom("Data was canceled");
 }
 
-function saveEditWord() {
-    var value_w = $("#inputEnglishWordEdit").val();
-    var value_w2 = $("#inputRussianWordEdit").val();
+function saveEditProduct() {
+    var value_w = $("#inputProductNameEdit").val();
     var id_type = $("#selectedGroupsEdit").val();
-    if (value_w && value_w2 && id_type) {
-        updateWordById(editWordID, value_w, value_w2, function (res) {
-            updateRelation(editWordID, id_type, function (res) {
-                if (typeOpen == BTN_ALL_WORDS) {
-                    currentForm = BTN_ALL_WORDS;
-                    showCurrentForm(BTN_ALL_WORDS);
-                } else if (typeOpen == BTN_CHK_WORDS) {
-                    currentForm = BTN_CHK_WORDS;
-                    showCurrentForm(BTN_CHK_WORDS);
+    if (value_w && id_type) {
+        updateProductById(editProductID, value_w, function (res) {
+            updateRelation(editProductID, id_type, function (res) {
+                if (typeOpen == BTN_ALL_PRODUCT) {
+                    currentForm = BTN_ALL_PRODUCT;
+                    showCurrentForm(BTN_ALL_PRODUCT);
+                } else if (typeOpen == BTN_CHK_PRODUCT) {
+                    currentForm = BTN_CHK_PRODUCT;
+                    showCurrentForm(BTN_CHK_PRODUCT);
                 } else if (typeOpen == BTN_CATEG_VIEW) {
                     onClickCategorieButton(currentCategorieID);
                 } else {
                     showCurrentForm(prevEditForm);
-                    currentForm = BTN_ALL_WORDS;
+                    currentForm = BTN_ALL_PRODUCT;
                 }
                 window.plugins.toast.showShortBottom("Data was saved");
             });
         });
     } else {
         showCurrentForm(prevEditForm);
-        currentForm = BTN_ALL_WORDS;
+        currentForm = BTN_ALL_PRODUCT;
         window.plugins.toast.showShortBottom("Data was not saved");
     }
 }
 
-function cancelEditWord() {
-    if (typeOpen == BTN_ALL_WORDS) {
-        currentForm = BTN_ALL_WORDS;
-        showCurrentForm(BTN_ALL_WORDS);
-    } else if (typeOpen == BTN_CHK_WORDS) {
-        currentForm = BTN_CHK_WORDS;
-        showCurrentForm(BTN_CHK_WORDS);
+function cancelEditProduct() {
+    if (typeOpen == BTN_ALL_PRODUCT) {
+        currentForm = BTN_ALL_PRODUCT;
+        showCurrentForm(BTN_ALL_PRODUCT);
+    } else if (typeOpen == BTN_CHK_PRODUCT) {
+        currentForm = BTN_CHK_PRODUCT;
+        showCurrentForm(BTN_CHK_PRODUCT);
     } else if (typeOpen == BTN_CATEG_VIEW) {
         onClickCategorieButton(currentCategorieID);
     } else {
         showCurrentForm(prevEditForm);
-        currentForm = BTN_ALL_WORDS;
+        currentForm = BTN_ALL_PRODUCT;
     }
     window.plugins.toast.showShortBottom("Data was canceled");
 }
@@ -505,7 +478,7 @@ function onClickCategorieButton(id) {
     hideAll();
     currentForm = BTN_CATEG_VIEW_DETAIL;
     prevEditForm = BTN_CATEG_VIEW;
-    setGridWordsBody(id);
+    setGridProductBody(id);
     $("#frmList").show();
 }
 
@@ -513,123 +486,13 @@ function showCurrentForm(index) {
     hideAll();
     switch (index) {
         case 0:
-        case BTN_ALL_WORDS:
-            prevEditForm = BTN_ALL_WORDS;
-            setGridWordsBody(ALL);
+        case BTN_ALL_PRODUCT:
+            prevEditForm = BTN_ALL_PRODUCT;
+            setGridProductBody(ALL);
             $("#frmList").show();
             break;
-        //case BTN_WORDS_PHRASES:
-        //    $("#frmWords").show();
-        //    break;
-        //case BTN_NEW_WORDS:
-        //    prevEditForm = index;
-        //    setGridWordsBody(NEW);
-        //    $("#frmList").show();
-        //    break;
-        //case BTN_PHRASES:
-        //    prevEditForm = index;
-        //    setGridWordsBody(PHRASES);
-        //    $("#frmList").show();
-        //    break;
-        //case BTN_ANY:
-        //    prevEditForm = index;
-        //    setGridWordsBody(ANY);
-        //    $("#frmList").show();
-        //    break;
-        //case BTN_VERB:
-        //    $("#frmVerbs").show();
-        //    break;
-        //case BTN_VERBS:
-        //    prevEditForm = index;
-        //    setGridWordsBody(VERB);
-        //    $("#frmList").show();
-        //    break;
-        //case BTN_VERBS_IRREG:
-        //    prevEditForm = index;
-        //    setGridWordsBody(VERB_IRREG);
-        //    $("#frmList").show();
-        //    break;
-        //case BTN_HOUSE:
-        //    prevEditForm = index;
-        //    setGridWordsBody(HOUSE);
-        //    $("#frmList").show();
-        //    break;
-        //case BTN_CLOTHING:
-        //    prevEditForm = index;
-        //    setGridWordsBody(CLOTHING);
-        //    $("#frmList").show();
-        //    break;
-        //case BTN_FOOD:
-        //    prevEditForm = index;
-        //    setGridWordsBody(FOOD);
-        //    $("#frmList").show();
-        //    break;
-        //case BTN_ADJECTIVE:
-        //    setGridWordsBody(ADJECTIVE);
-        //    $("#frmList").show();
-        //    break;
-        //case BTN_OFFICE:
-        //    prevEditForm = index;
-        //    setGridWordsBody(OFFICE);
-        //    $("#frmList").show();
-        //    break;
-        //case BTN_COLLOCATION:
-        //    prevEditForm = index;
-        //    setGridWordsBody(COLLOCATION);
-        //    $("#frmList").show();
-        //    break;
-        //case BTN_TRANSPORT:
-        //    prevEditForm = index;
-        //    setGridWordsBody(TRANSPORT);
-        //    $("#frmList").show();
-        //    break;
-        //case BTN_MONEY:
-        //    prevEditForm = index;
-        //    setGridWordsBody(MONEY);
-        //    $("#frmList").show();
-        //    break;
-        //case BTN_NATURAL:
-        //    prevEditForm = index;
-        //    setGridWordsBody(NATURAL);
-        //    $("#frmList").show();
-        //    break;
-        //case BTN_ANIMALS:
-        //    prevEditForm = index;
-        //    setGridWordsBody(ANIMALS);
-        //    $("#frmList").show();
-        //    break;
-        //case BTN_REST:
-        //    prevEditForm = index;
-        //    setGridWordsBody(REST);
-        //    $("#frmList").show();
-        //    break;
-        //case BTN_MEDICAL:
-        //    prevEditForm = index;
-        //    setGridWordsBody(MEDICAL);
-        //    $("#frmList").show();
-        //    break;
-        //case BTN_IDIOM:
-        //    prevEditForm = index;
-        //    setGridWordsBody(IDIOM);
-        //    $("#frmList").show();
-        //    break;
-        //case BTN_CRIME_PUNISHMENT:
-        //    prevEditForm = index;
-        //    setGridWordsBody(CRIME_PUNISHMENT);
-        //    $("#frmList").show();
-        //    break;
-        //case BTN_PERSON_FAMILY:
-        //    prevEditForm = index;
-        //    setGridWordsBody(PERSON_FAMILY);
-        //    $("#frmList").show();
-        //    break;
-        //case BTN_TONGUE_TWISTER:
-        //    prevEditForm = index;
-        //    setGridWordsBody(TONGUE_TWISTER);
-        //    $("#frmList").show();
-        //    break;
-        case BTN_CHK_WORDS:
-            setGridWordsBody(CHK);
+        case BTN_CHK_PRODUCT:
+            setGridProductBody(CHK);
             $("#frmList").show();
             break;
         case BTN_BACKUP:
@@ -641,25 +504,25 @@ function showCurrentForm(index) {
         case BTN_BACKUP_IMPORT:
             importDatabase();
             break;
-        case BTN_ADD_WORD:
-            currentForm = BTN_ADD_WORD;
+        case BTN_ADD_PRODUCT:
+            currentForm = BTN_ADD_PRODUCT;
             setDataToSelect('selectedGroups', 0);
-            $("#frmAddWord").show();
+            $("#frmAddProduct").show();
             break;
-        case BTN_ADD_WORD_SAVE:
-            saveNewWord();
+        case BTN_ADD_PRODUCT_SAVE:
+            saveNewProduct();
             break;
-        case BTN_ADD_WORD_CANCEL:
-            cancelNewWord()
+        case BTN_ADD_PRODUCT_CANCEL:
+            cancelNewProduct()
             break;
-        case BTN_EDT_WORD:
-            $("#frmEditWord").show();
+        case BTN_EDT_PRODUCT:
+            $("#frmEditProduct").show();
             break;
-        case BTN_EDT_WORD_SAVE:
-            saveEditWord();
+        case BTN_EDT_PRODUCT_SAVE:
+            saveEditProduct();
             break;
-        case BTN_EDT_WORD_CANCEL:
-            cancelEditWord();
+        case BTN_EDT_PRODUCT_CANCEL:
+            cancelEditProduct();
             break;
         case BTN_CATEG:
             setGridCategoriesBody();
@@ -694,9 +557,9 @@ function onClickBack() {
     switch (currentForm) {
         case BTN_CATEG_VIEW:
         case BTN_CATEG:
-        case BTN_ADD_WORD:
-        //case BTN_WORDS_PHRASES:
-        //case BTN_NEW_WORDS:
+        case BTN_ADD_PRODUCT:
+        //case BTN_PRODUCT_PHRASES:
+        //case BTN_NEW_PRODUCT:
         case BTN_BACKUP:
         case BTN_BACKUP_EXPORT:
         case BTN_BACKUP_IMPORT:
@@ -706,7 +569,7 @@ function onClickBack() {
         //case BTN_PHRASES:
         //case BTN_ANY:
         //case BTN_VERB:
-        //    currentForm = BTN_WORDS_PHRASES;
+        //    currentForm = BTN_PRODUCT_PHRASES;
         //    showCurrentForm(currentForm);
         //    break;
         //case BTN_VERBS:
@@ -732,25 +595,25 @@ function onClickBack() {
         //case BTN_IDIOM:
         //case BTN_CRIME_PUNISHMENT:
         //case BTN_PERSON_FAMILY:
-        //    currentForm = BTN_WORDS_PHRASES;
+        //    currentForm = BTN_PRODUCT_PHRASES;
         //    showCurrentForm(currentForm);
         //    break;
-        case BTN_ALL_WORDS:
-        case BTN_CHK_WORDS:
-        case BTN_EDT_WORD:
-            //currentForm = BTN_EDT_WORD;
+        case BTN_ALL_PRODUCT:
+        case BTN_CHK_PRODUCT:
+        case BTN_EDT_PRODUCT:
+            //currentForm = BTN_EDT_PRODUCT;
             //showCurrentForm(prevEditForm);
-            if (typeOpen == BTN_ALL_WORDS) {
-                currentForm = BTN_ALL_WORDS;
-                showCurrentForm(BTN_ALL_WORDS);
-            } else if (typeOpen == BTN_CHK_WORDS) {
-                currentForm = BTN_CHK_WORDS;
-                showCurrentForm(BTN_CHK_WORDS);
+            if (typeOpen == BTN_ALL_PRODUCT) {
+                currentForm = BTN_ALL_PRODUCT;
+                showCurrentForm(BTN_ALL_PRODUCT);
+            } else if (typeOpen == BTN_CHK_PRODUCT) {
+                currentForm = BTN_CHK_PRODUCT;
+                showCurrentForm(BTN_CHK_PRODUCT);
             } else if (typeOpen == BTN_CATEG_VIEW) {
                 onClickCategorieButton(currentCategorieID);
             } else {
                 showCurrentForm(prevEditForm);
-                currentForm = BTN_ALL_WORDS;
+                currentForm = BTN_ALL_PRODUCT;
             }
 
             break;
