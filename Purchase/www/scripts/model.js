@@ -8,8 +8,8 @@ var currentCategorieID = -1;
 var typeOpen = -1;
 
 var dbLocation = 'default';
-var model_dbname = "purchase.db";
-var model_dbname_backup = "purchase_bak.db";
+var model_dbname = "purchase1.db";
+var model_dbname_backup = "purchase1_bak.db";
 
 var CHK = 1000;
 var ALL = 0;
@@ -260,17 +260,6 @@ function selectProductCHK(callBack) {
     });
 }
 
-function selectProductCHK(callBack) {
-    var db = openDatabase();
-    db.transaction(function (tx) {
-        tx.executeSql("select * from vrows where is_checked = 1 order by id desc;", [], function (tx, res) {
-            callBack(res);
-        }, function (tx, error) {
-            console.log('SELECT error: ' + error.message);
-        });
-    });
-}
-
 function setProductCheckBox(id, checked) {
     var db = openDatabase();
     db.transaction(function (tx) {
@@ -278,6 +267,8 @@ function setProductCheckBox(id, checked) {
         if (checked == true)
             chk = 1;
         tx.executeSql("update product set is_checked = " + chk + " where id = " + id);
+    }, function (tx, error) {
+        console.log('Transaction error: ' + error.message);
     });
 }
 
@@ -335,7 +326,7 @@ function createTablesWithCheck(isReload) {
     db.transaction(function (tx) {
         tx.executeSql("SELECT name FROM sqlite_master WHERE type='table' AND name='product'", [], function (tx, res) {
             var cnt = res.rows.length;
-            //if (isReload == 1)
+            if (isReload == 1)
                 cnt = 0;
             if (cnt == 0) {
                 tx.executeSql("DROP TABLE IF EXISTS types;");

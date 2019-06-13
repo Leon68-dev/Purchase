@@ -66,13 +66,10 @@ function checkedValue(val) {
         return "";
 }
 
-function addStrValue(value_text, value_text2, id, isChecked) {
+function addStrValue(value_text, id, isChecked) {
     var value_t = "";
     if (value_text && value_text != "undefined")
         value_t = value_text;
-
-    if (value_text2 && value_text2 != "undefined")
-        value_t += ("<br> - " + value_text2);
 
     var str = "<tr ><td width='20%' style='text-align:center'><input type='checkbox' style='zoom:3' onclick='onClickCheckBox(this);' value ='"
             + id + "' " + checkedValue(isChecked)
@@ -94,7 +91,7 @@ function addStrValueCategories(id, name) {
 
 function editProduct(idProduct) {
     selectProductById(idProduct, function (res) {
-        setDataToSelect('selectedGroupsEdit', res.rows.item(0).code);
+        setDataToSelect('selectedTypeEdit', res.rows.item(0).code);
         $("#inputProductNameEdit").val(res.rows.item(0).value_w);
         editProductID = idProduct;
         onClickButton(BTN_EDT_PRODUCT);
@@ -316,7 +313,7 @@ function setDataToSelect(nameSelector, selectID) {
 
 function saveNewProduct() {
     var value_w = $("#inputProductName").val();
-    var id_type = $("#selectedGroups").val();
+    var id_type = $("#selectedType").val();
 
     if (value_w) {
         insertProductById(0, value_w, 0, function (res) {
@@ -348,7 +345,7 @@ function cancelNewProduct() {
 
 function saveEditProduct() {
     var value_w = $("#inputProductNameEdit").val();
-    var id_type = $("#selectedGroupsEdit").val();
+    var id_type = $("#selectedTypeEdit").val();
     if (value_w && id_type) {
         updateProductById(editProductID, value_w, function (res) {
             updateRelation(editProductID, id_type, function (res) {
@@ -506,7 +503,7 @@ function showCurrentForm(index) {
             break;
         case BTN_ADD_PRODUCT:
             currentForm = BTN_ADD_PRODUCT;
-            setDataToSelect('selectedGroups', 0);
+            setDataToSelect('selectedType', 0);
             $("#frmAddProduct").show();
             break;
         case BTN_ADD_PRODUCT_SAVE:

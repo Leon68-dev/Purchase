@@ -62,7 +62,7 @@
                                 <input type="search" class="form-control" id="searchText" placeholder="Find">
                             </div>
                             <div class="col-xs-2 col-sm-2">
-                                <button type="button" class="btn btn-default btn-success" onclick="onClickButtonFind();">Find</button>
+                                <button type="button" class="btn btn-default btn-success" onclick="onClickButtonFind();">Поиск</button>
                             </div>
                         </div>
                     </div>
@@ -86,17 +86,6 @@
                     </div>
                 </div>
             </form>
-
-            <!--<form id="frmVerbs">
-                <div class="panel-body">
-                    <div class="form-group">
-                        <ul data-role="listview" data-inset="true">
-                            <li style="text-align:center;"  onclick="onClickButton(BTN_VERBS);">Verbs</li>
-                            <li style="text-align:center;"  onclick="onClickButton(BTN_VERBS_IRREG);">Verbs Irregular</li>
-                        </ul>
-                    </div>
-                </div>
-            </form>-->
 
             <form id="frmBackup">
                 <h2>Backup</h2>
@@ -122,29 +111,24 @@
 
                 <div data-role="main" class="ui-content">
                     <div class="ui-field-contain">
-                        <label for="inputProductName">English</label>
+                        <label for="inputProductName">Наименование</label>
                         <input type="text" name="ProductName" id="inputProductName">
-                        <label for="inputRussianhWord">Russian</label>
-                        <input type="text" name="RussianWord" id="inputRussianWord">
-                        <label for="selectedGroups">Group</label>
+                        <label for="selectedType">Категория</label>
                         <fieldset data-role="controlgroup">
-                            <!-- <label for="selectedGroups">Select A</label> -->
-                            <!--  onchange="setGridPayment();" -->
-                            <select name="selectedGroups" id="selectedGroups" >
-                                <!-- <option value="1">Name</option> -->
+                            <select name="selectedType" id="selectedType" >
                             </select>
                         </fieldset>
 
                         <div class="ui-grid-a">
                             <div class="ui-block-a">
                                 <div class="button-wrap">
-                                    <button class="ui-btn ui-corner-all" onclick="onClickButton(BTN_ADD_PRODUCT_SAVE);">Save</button>
+                                    <button class="ui-btn ui-corner-all" onclick="onClickButton(BTN_ADD_PRODUCT_SAVE);">Сохранить</button>
                                 </div>
                             </div>
 
                             <div class="ui-block-b">
                                 <div class="button-wrap">
-                                    <button class="ui-btn ui-corner-all" onclick="onClickButton(BTN_ADD_PRODUCT_CANCEL);">Cancel</button>
+                                    <button class="ui-btn ui-corner-all" onclick="onClickButton(BTN_ADD_PRODUCT_CANCEL);">Отменить</button>
                                 </div>
                             </div>
                         </div>
@@ -155,14 +139,11 @@
             <form id="frmEditProduct">
                 <div data-role="main" class="ui-content">
                     <div class="ui-field-contain">
-                        <label for="inputProductNameEdit">English</label>
+                        <label for="inputProductNameEdit">Наименование</label>
                         <input type="text" name="ProductName" id="inputProductNameEdit">
-                        <label for="selectedGroupsEdit">Group</label>
+                        <label for="selectedTypeEdit">Категория</label>
                         <fieldset data-role="controlgroup">
-                            <!-- <label for="selectedGroupsEdit">Select A</label> -->
-                            <!-- onchange="setGridPayment();" -->
-                            <select name="selectedGroupsEdit" id="selectedGroupsEdit" >
-                                <!-- <option value="1">Name</option> -->
+                            <select name="selectedTypeEdit" id="selectedTypeEdit" >
                             </select>
                         </fieldset>
 
@@ -170,13 +151,13 @@
                         <div class="ui-grid-a">
                             <div class="ui-block-a">
                                 <div class="button-wrap">
-                                    <button class="ui-btn ui-corner-all" onclick="onClickButton(BTN_EDT_PRODUCT_SAVE);">Save</button>
+                                    <button class="ui-btn ui-corner-all" onclick="onClickButton(BTN_EDT_PRODUCT_SAVE);">Сохранить</button>
                                 </div>
                             </div>
 
                             <div class="ui-block-b">
                                 <div class="button-wrap">
-                                    <button class="ui-btn ui-corner-all" onclick="onClickButton(BTN_EDT_PRODUCT_CANCEL);">Cancel</button>
+                                    <button class="ui-btn ui-corner-all" onclick="onClickButton(BTN_EDT_PRODUCT_CANCEL);">Отменить</button>
                                 </div>
                             </div>
                         </div>
@@ -188,13 +169,12 @@
                 <div class="panel-body" id="frmListBody">
                     <div class="form-group">
                         <ul data-role="listview" data-inset="true">
-                            <li style="text-align:center;" onclick="onClickButton(BTN_ADD_CATEG);">Add categories</li>
+                            <li style="text-align:center;" onclick="onClickButton(BTN_ADD_CATEG);">Добавить категорию</li>
                         </ul>
                     </div>
                     <br>
                     <div class="row">
                         <div class="col-xs-12 col-sm-12">
-                            <!--<table class="table table-condensed" id="gridProduct" border="1px" >-->
                             <table style="table-layout:fixed" width="100%" id="gridCategories">
                                 <thead>
                                     <!--<tr>
@@ -215,18 +195,18 @@
             <form id="frmAddCategories">
                 <div data-role="main" class="ui-content">
                     <div class="ui-field-contain">
-                        <label for="inputCategorie">Categorie</label>
+                        <label for="inputCategorie">Категория</label>
                         <input type="text" name="inputCategorie" id="inputCategorie">
                         <div class="ui-grid-a">
                             <div class="ui-block-a">
                                 <div class="button-wrap">
-                                    <button class="ui-btn ui-corner-all" onclick="onClickButton(BTN_ADD_CATEG_SAVE);">Save</button>
+                                    <button class="ui-btn ui-corner-all" onclick="onClickButton(BTN_ADD_CATEG_SAVE);">Сохранить</button>
                                 </div>
                             </div>
 
                             <div class="ui-block-b">
                                 <div class="button-wrap">
-                                    <button class="ui-btn ui-corner-all" onclick="onClickButton(BTN_ADD_CATEG_CANCEL);">Cancel</button>
+                                    <button class="ui-btn ui-corner-all" onclick="onClickButton(BTN_ADD_CATEG_CANCEL);">Отменить</button>
                                 </div>
                             </div>
                         </div>
@@ -237,19 +217,19 @@
             <form id="frmEditCategories">
                 <div data-role="main" class="ui-content">
                     <div class="ui-field-contain">
-                        <label for="inputCategorieEdit">Categorie</label>
+                        <label for="inputCategorieEdit">Категория</label>
                         <input type="text" name="inputCategorieEdit" id="inputCategorieEdit">
 
                         <div class="ui-grid-a">
                             <div class="ui-block-a">
                                 <div class="button-wrap">
-                                    <button class="ui-btn ui-corner-all" onclick="onClickButton(BTN_EDT_CATEG_SAVE);">Save</button>
+                                    <button class="ui-btn ui-corner-all" onclick="onClickButton(BTN_EDT_CATEG_SAVE);">Сохранить</button>
                                 </div>
                             </div>
 
                             <div class="ui-block-b">
                                 <div class="button-wrap">
-                                    <button class="ui-btn ui-corner-all" onclick="onClickButton(BTN_EDT_CATEG_CANCEL);">Cancel</button>
+                                    <button class="ui-btn ui-corner-all" onclick="onClickButton(BTN_EDT_CATEG_CANCEL);">Отменить</button>
                                 </div>
                             </div>
                         </div>
@@ -271,11 +251,12 @@
 
         <div data-role="panel" id="left-panel" data-display="overlay" data-theme="b">
             <div class="form-group">
-                <ul data-role="listview" data-inset="true" >
+                <ul data-role="listview" data-inset="true">
                     <li data-rel="close" onclick="onClickButton(BTN_ADD_PRODUCT)">Добавить наименование</li>
                     <li data-rel="close" onclick="onClickButton(BTN_CATEG_VIEW)">Категория</li>
                     <li data-rel="close" onclick="onClickButton(BTN_CATEG)">Категория (спр)</li>
                     <li data-rel="close" onclick="onClickButton(BTN_ALL_PRODUCT)">Покупки</li>
+                    <li data-rel="close" onclick="onClickButton(BTN_CHK_PRODUCT)">Покупки отмеченные</li>
                     <li data-rel="close" onclick="onClickButton(BTN_BACKUP)">Backup</li>
                 </ul>
             </div>
