@@ -52,38 +52,58 @@
             <button type="button" class="back-btn ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline ui-icon-back ui-btn-icon-right" onclick="onClickBack();">Назад</button>
         </div>
         
-        <div role="main" class="ui-content" >
+        <div role="main" class="ui-content">
 
             <form id="frmList">
                 <div class="panel-body" id="frmListBody">
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-xs-9 col-sm-9">
-                                <input type="search" class="form-control" id="searchText" placeholder="Find">
-                            </div>
-                            <div class="col-xs-2 col-sm-2">
-                                <button type="button" class="btn btn-default btn-success" onclick="onClickButtonFind();">Поиск</button>
-                            </div>
-                        </div>
-                    </div>
                     <br>
                     <div class="row">
                         <div class="col-xs-12 col-sm-12">
-                            <!--<table class="table table-condensed" id="gridProduct" border="1px" >-->
-                                <table  style="table-layout:fixed" width="100%" id="gridProduct" >
-                                    <thead>
-                                        <!--<tr>
-                                            <th>
-                                            </th>
-                                            <th>
-                                                Value
-                                            </th>
-                                        </tr>-->
-                                    </thead>
-                                    <tbody id="tbodyid"></tbody>
-                                </table>
+                            <table style="table-layout:fixed" width="100%" id="gridProduct">
+                                <thead>
+                                    <!--<tr>
+                                <th>
+                                </th>
+                                <th>
+                                    Value
+                                </th>
+                            </tr>-->
+                                </thead>
+                                <tbody id="tbodyid"></tbody>
+                            </table>
                         </div>
                     </div>
+
+                </div>
+            </form>
+
+
+            <form id="frmListAddProduct">
+                <div class="panel-body" id="frmListBodyAddProd">
+                    <br>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12">
+                            <table style="table-layout:fixed" width="100%" id="gridProductAddProd">
+                                <thead>
+                                    <!--<tr>
+                                <th>
+                                </th>
+                                <th>
+                                    Value
+                                </th>
+                            </tr>-->
+                                </thead>
+                                <tbody id="tbodyid"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <ul data-role="listview" data-inset="true">
+                            <li style="text-align:center;" onclick="onClickButton(BTN_ADD_PRODUCT);">Добавить наименование</li>
+                        </ul>
+                    </div>
+
                 </div>
             </form>
 
@@ -100,23 +120,13 @@
             </form>
 
             <form id="frmAddProduct">
-                <!--<h2>Add Word</h2>
-                <div class="panel-body">
-                    <div class="form-group">
-                        <ul data-role="listview" data-inset="true">
-
-                        </ul>
-                    </div>
-                </div>-->
-
                 <div data-role="main" class="ui-content">
                     <div class="ui-field-contain">
                         <label for="inputProductName">Наименование</label>
                         <input type="text" name="ProductName" id="inputProductName">
                         <label for="selectedType">Категория</label>
                         <fieldset data-role="controlgroup">
-                            <select name="selectedType" id="selectedType" >
-                            </select>
+                            <select name="selectedType" id="selectedType"></select>
                         </fieldset>
 
                         <div class="ui-grid-a">
@@ -143,10 +153,8 @@
                         <input type="text" name="ProductName" id="inputProductNameEdit">
                         <label for="selectedTypeEdit">Категория</label>
                         <fieldset data-role="controlgroup">
-                            <select name="selectedTypeEdit" id="selectedTypeEdit" >
-                            </select>
+                            <select name="selectedTypeEdit" id="selectedTypeEdit"></select>
                         </fieldset>
-
 
                         <div class="ui-grid-a">
                             <div class="ui-block-a">
@@ -241,9 +249,15 @@
                 <div class="panel-body">
                     <div class="form-group">
                         <ul id="categoriesButtons" data-role="listview" data-inset="true">
-                            <li/>
+                            <li />
+                        </ul>
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                        <ul data-role="listview" data-inset="true">
+                            <li style="text-align:center;" onclick="onClickButton(BTN_ADD_CATEG);">Добавить категорию</li>
                         </ul>
                     </div>
+
                 </div>
             </form>
 
@@ -254,8 +268,8 @@
                 <ul data-role="listview" data-inset="true">
                     <li data-rel="close" onclick="onClickButton(BTN_ADD_PRODUCT)">Добавить наименование</li>
                     <li data-rel="close" onclick="onClickButton(BTN_CATEG_VIEW)">Категория</li>
-                    <li data-rel="close" onclick="onClickButton(BTN_CATEG)">Категория (спр)</li>
-                    <li data-rel="close" onclick="onClickButton(BTN_ALL_PRODUCT)">Покупки</li>
+                    <!--<li data-rel="close" onclick="onClickButton(BTN_CATEG)">Категория (спр)</li>-->
+                    <!--<li data-rel="close" onclick="onClickButton(BTN_ALL_PRODUCT)">Покупки</li>-->
                     <li data-rel="close" onclick="onClickButton(BTN_CHK_PRODUCT)">Покупки отмеченные</li>
                     <li data-rel="close" onclick="onClickButton(BTN_BACKUP)">Backup</li>
                 </ul>

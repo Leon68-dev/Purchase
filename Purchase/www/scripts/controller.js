@@ -3,18 +3,13 @@
 }
 
 function hideAll() {
-    $("#frmVerbs").hide();
-    $("#frmVerbs").submit(function () {
-        return false;
-    });
-
     $("#frmProduct").hide();
     $("#frmProduct").submit(function () {
         return false;
     });
 
-    $("#frmVerbs").hide();
-    $("#frmVerbs").submit(function () {
+    $("#frmListAddProduct").hide();
+    $("#frmListAddProduct").submit(function () {
         return false;
     });
 
@@ -66,14 +61,26 @@ function checkedValue(val) {
         return "";
 }
 
+function addStrValueAddProd(value_text, id, isChecked) {
+    var value_t = "";
+    if (value_text && value_text != "undefined")
+        value_t = value_text;
+
+    var str = "<tr ><td width='20%' style='text-align:center'><input type='checkbox' style='zoom:3' onclick='onClickCheckBox(this);' value ='"
+        + id + "' " + checkedValue(isChecked) + "></td><td style='word-wrap:break-word'>" + value_t
+        + "</td><td width='10%'><a href='#' class='ui-btn ui-corner-all ui-icon-edit ui-btn-icon-notext ui-btn-inline' onclick='editProduct(" + id + ");'>Edit</a>"
+        + "<a href='#' class='ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-inline' onclick='delProduct(" + id + ");'>Delete</a>"
+        + "</td></tr>";
+    $("#gridProductAddProd > tbody:last").after(str);
+}
+
 function addStrValue(value_text, id, isChecked) {
     var value_t = "";
     if (value_text && value_text != "undefined")
         value_t = value_text;
 
     var str = "<tr ><td width='20%' style='text-align:center'><input type='checkbox' style='zoom:3' onclick='onClickCheckBox(this);' value ='"
-            + id + "' " + checkedValue(isChecked)
-            + "></td><td style='word-wrap:break-word'>" + value_t
+            + id + "' " + checkedValue(isChecked) + "></td><td style='word-wrap:break-word'>" + value_t
             + "</td><td width='10%'><a href='#' class='ui-btn ui-corner-all ui-icon-edit ui-btn-icon-notext ui-btn-inline' onclick='editProduct(" + id + ");'>Edit</a>"
             + "<a href='#' class='ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-inline' onclick='delProduct(" + id + ");'>Delete</a>"
             + "</td></tr>";
@@ -122,6 +129,20 @@ function getToastCountItems(itemsFound) {
     }
 }
 
+function setGridProductBodyAddProd(productType) {
+    $("#searchText").val("");
+    clearTBodyAddProd();
+
+    selectProductCHK(function (res) {
+        var cnt = res.rows.length;
+        for (i = 0; i < cnt; i++) {
+            addStrValueAddProd(res.rows.item(i).value_w, res.rows.item(i).id, res.rows.item(i).is_checked);
+        }
+        getToastCountItems(cnt);
+    });
+    
+}
+
 function setGridProductBody(productType) {
     $("#searchText").val("");
     clearTBody();
@@ -145,6 +166,7 @@ function setGridProductBody(productType) {
    }
 }
 
+
 function onClickCheckBox(param) {
     var id = param.value;
     var isChecked = param.checked;
@@ -161,6 +183,13 @@ function onClickButton(index) {
 
 function clearTBody() {
     var table = document.getElementById("gridProduct");
+    for (var i = table.rows.length - 1; i >= 0; i--) {
+        table.deleteRow(i);
+    }
+}
+
+function clearTBodyAddProd() {
+    var table = document.getElementById("gridProductAddProd");
     for (var i = table.rows.length - 1; i >= 0; i--) {
         table.deleteRow(i);
     }
@@ -209,12 +238,11 @@ function onClickButtonFind() {
 
 function deviceReady() {
     hideAll();
-    setGridProductBody(ALL);
+    //setGridProductBody(ALL);
+    setGridProductBody(CHK);
     $("#frmList").show();
-    createTablesWithCheck(0);
+    createTablesWithCheck(0);    
 }
-
-
 
 function addZerro(param) {
     if (param < 10)
@@ -403,12 +431,12 @@ function saveNewCategorie() {
     if (name) {
         insertCategorie(name.trim().toLocaleUpperCase(), function (res) {
             $("#inputCategorie").val('');
-            showCurrentForm(BTN_CATEG);
+            showCurrentForm(BTN_CATEG_VIEW);
             window.plugins.toast.showShortBottom("Data was saved");
         });
     } else {
         $("#inputCategorie").val('');
-        showCurrentForm(BTN_CATEG);
+        showCurrentForm(BTN_CATEG_VIEW);
         window.plugins.toast.showShortBottom("Data was not saved");
     }
 }
@@ -416,7 +444,7 @@ function saveNewCategorie() {
 function cancelCategorie() {
     $("#inputCategorie").val('');
     $("#inputCategorieEdit").val('');
-    showCurrentForm(BTN_CATEG);
+    showCurrentForm(BTN_CATEG_VIEW);
     window.plugins.toast.showShortBottom("Data was canceled");
 }
 
@@ -449,12 +477,12 @@ function saveEditCategorie() {
     if (name) {
         updateCategorie(editCategorieID, name.trim().toUpperCase(), function (res) {
             $("#inputCategorieEdit").val('');
-            showCurrentForm(BTN_CATEG);
+            showCurrentForm(BTN_CATEG_VIEW);
             window.plugins.toast.showShortBottom("Data was saved");
         });
     } else {
         $("#inputCategorieEdit").val('');
-        showCurrentForm(BTN_CATEG);
+        showCurrentForm(BTN_CATEG_VIEW);
         window.plugins.toast.showShortBottom("Data was not saved");
     }
 }
@@ -475,8 +503,8 @@ function onClickCategorieButton(id) {
     hideAll();
     currentForm = BTN_CATEG_VIEW_DETAIL;
     prevEditForm = BTN_CATEG_VIEW;
-    setGridProductBody(id);
-    $("#frmList").show();
+    setGridProductBodyAddProd(id);
+    $("#frmListAddProduct").show();
 }
 
 function showCurrentForm(index) {
@@ -484,11 +512,12 @@ function showCurrentForm(index) {
     switch (index) {
         case 0:
         case BTN_ALL_PRODUCT:
-            prevEditForm = BTN_ALL_PRODUCT;
-            setGridProductBody(ALL);
-            $("#frmList").show();
-            break;
+            //prevEditForm = BTN_ALL_PRODUCT;
+            //setGridProductBody(ALL);
+            //$("#frmList").show();
+            //break;
         case BTN_CHK_PRODUCT:
+            prevEditForm = BTN_ALL_PRODUCT;
             setGridProductBody(CHK);
             $("#frmList").show();
             break;
@@ -554,6 +583,8 @@ function onClickBack() {
     switch (currentForm) {
         case BTN_CATEG_VIEW:
         case BTN_CATEG:
+            currentForm = BTN_CATEG_VIEW;
+            showCurrentForm(BTN_CATEG_VIEW);
         case BTN_ADD_PRODUCT:
         //case BTN_PRODUCT_PHRASES:
         //case BTN_NEW_PRODUCT:
@@ -563,38 +594,6 @@ function onClickBack() {
             currentForm = 0;
             showCurrentForm(currentForm);
             break;
-        //case BTN_PHRASES:
-        //case BTN_ANY:
-        //case BTN_VERB:
-        //    currentForm = BTN_PRODUCT_PHRASES;
-        //    showCurrentForm(currentForm);
-        //    break;
-        //case BTN_VERBS:
-        //    currentForm = BTN_VERB;
-        //    showCurrentForm(currentForm);
-        //    break;
-        //case BTN_VERBS_IRREG:
-        //    currentForm = BTN_VERB;
-        //    showCurrentForm(currentForm);
-        //    break;
-        //case BTN_HOUSE:
-        //case BTN_CLOTHING:
-        //case BTN_FOOD:
-        //case BTN_ADJECTIVE:
-        //case BTN_OFFICE:
-        //case BTN_COLLOCATION:
-        //case BTN_TRANSPORT:
-        //case BTN_MONEY:
-        //case BTN_NATURAL:
-        //case BTN_ANIMALS:
-        //case BTN_REST:
-        //case BTN_MEDICAL:
-        //case BTN_IDIOM:
-        //case BTN_CRIME_PUNISHMENT:
-        //case BTN_PERSON_FAMILY:
-        //    currentForm = BTN_PRODUCT_PHRASES;
-        //    showCurrentForm(currentForm);
-        //    break;
         case BTN_ALL_PRODUCT:
         case BTN_CHK_PRODUCT:
         case BTN_EDT_PRODUCT:
@@ -612,7 +611,6 @@ function onClickBack() {
                 showCurrentForm(prevEditForm);
                 currentForm = BTN_ALL_PRODUCT;
             }
-
             break;
         case BTN_ADD_CATEG:
         case BTN_EDT_CATEG:

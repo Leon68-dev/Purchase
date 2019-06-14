@@ -159,11 +159,6 @@ function strInsertProduct(sqlValue) {
     return strSql;
 }
 
-function strInsertProduct(sqlValue) {
-    var strSql = "INSERT INTO product(value_w, is_checked) VALUES('" + sqlValue + "', 0);";
-    return strSql;
-}
-
 function strInsertRelation(sqlValue) {
     var strSql = "INSERT INTO relations (id_product, id_type) select w.id, (select id from types where name = '" + sqlValue + "')"
         + " from product w where w.id between (select min(t.id) from product t where t.id not in "
@@ -335,6 +330,8 @@ function createTablesWithCheck(isReload) {
                 tx.executeSql(strInsertType("Мясо"));
                 tx.executeSql(strInsertType("Овощи"));
                 tx.executeSql(strInsertType("Фрукты"));
+                tx.executeSql(strInsertType("Рыба"));
+                tx.executeSql(strInsertType("Молочные"));
                 tx.executeSql("CREATE UNIQUE INDEX 'ix_name' on types ('name' ASC);");
                 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 tx.executeSql("DROP TABLE IF EXISTS product;");
@@ -343,13 +340,13 @@ function createTablesWithCheck(isReload) {
                 tx.executeSql("DROP TABLE IF EXISTS relations;");
                 tx.executeSql("CREATE TABLE IF NOT EXISTS relations (id integer primary key, id_product integer, id_type text);");
                 //-------------------------------------------------------------------------------------------------------------
-                //sample
-                //tx.executeSql(strInsertProduct("cut-throat", "ожесточенной"));
-                //tx.executeSql(strInsertProduct("such", "такой"));
-                //tx.executeSql(strInsertProduct("rival", "соперник"));
-                ////-------------------------------------------------------------------------------------------------------------
-                //tx.executeSql(strInsertRelation("ANY"));
-
+                tx.executeSql(strInsertProduct("Молоко"));
+                tx.executeSql(strInsertProduct("Кефир"));
+                tx.executeSql(strInsertProduct("Сметана"));
+                tx.executeSql(strInsertProduct("Ряженка"));
+                tx.executeSql(strInsertProduct("Сливки"));
+                //-------------------------------------------------------------------------------------------------------------
+                tx.executeSql(strInsertRelation("Молочные"));
                 
                 //-------------------------------------------------------------------------------------------------------------
                 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
