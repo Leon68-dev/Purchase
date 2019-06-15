@@ -321,7 +321,7 @@ function createTablesWithCheck(isReload) {
     db.transaction(function (tx) {
         tx.executeSql("SELECT name FROM sqlite_master WHERE type='table' AND name='product'", [], function (tx, res) {
             var cnt = res.rows.length;
-            //if (isReload == 1)
+            if (isReload == 1)
                 cnt = 0;
             if (cnt == 0) {
                 tx.executeSql("DROP TABLE IF EXISTS types;");
