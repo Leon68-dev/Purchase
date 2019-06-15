@@ -332,12 +332,12 @@ function createTablesWithCheck(isReload) {
                 tx.executeSql(strInsertType("Зелень"));
                 tx.executeSql(strInsertType("Фрукты"));
                 tx.executeSql(strInsertType("Рыба"));
-                tx.executeSql(strInsertType("Молочные"));
+                tx.executeSql(strInsertType("Молочка"));
                 tx.executeSql(strInsertType("Напитки"));
                 tx.executeSql(strInsertType("Спиртное"));
                 tx.executeSql(strInsertType("Крупы"));
                 tx.executeSql(strInsertType("Мучное"));
-                tx.executeSql(strInsertType("Специи"));
+                tx.executeSql(strInsertType("Специи и приправы"));
                 tx.executeSql(strInsertType("Десерт"));
                 tx.executeSql(strInsertType("Хлеб"));
                 tx.executeSql("CREATE UNIQUE INDEX 'ix_name' on types ('name' ASC);");
@@ -389,6 +389,7 @@ function createTablesWithCheck(isReload) {
                 tx.executeSql(strInsertProduct("Мандарины"));
                 tx.executeSql(strInsertProduct("Лемон"));
                 tx.executeSql(strInsertProduct("Киви"));
+                tx.executeSql(strInsertProduct("Гранат"));
                 tx.executeSql(strInsertRelation("Фрукты"));
                 //-------------------------------------------------------------------------------------------------------------
                 tx.executeSql(strInsertProduct("Селёдка"));
@@ -408,7 +409,7 @@ function createTablesWithCheck(isReload) {
                 tx.executeSql(strInsertProduct("Масло сливочное"));
                 tx.executeSql(strInsertProduct("Сир дорогой"));
                 tx.executeSql(strInsertProduct("Сир дешевый"));
-                tx.executeSql(strInsertRelation("Молочные"));
+                tx.executeSql(strInsertRelation("Молочка"));
                 //-------------------------------------------------------------------------------------------------------------
                 tx.executeSql(strInsertProduct("Чай черный"));
                 tx.executeSql(strInsertProduct("Чай зеленый"));
@@ -462,7 +463,7 @@ function createTablesWithCheck(isReload) {
                 tx.executeSql(strInsertProduct("Масло растительное"));
                 tx.executeSql(strInsertProduct("Соль"));
                 tx.executeSql(strInsertProduct("Сахар"));
-                tx.executeSql(strInsertRelation("Специи"));
+                tx.executeSql(strInsertRelation("Специи и приправы"));
                 //-------------------------------------------------------------------------------------------------------------
                 tx.executeSql(strInsertProduct("Семки подсолнечные"));
                 tx.executeSql(strInsertProduct("Семки кабаковые"));
@@ -479,7 +480,7 @@ function createTablesWithCheck(isReload) {
                 tx.executeSql(strInsertRelation("Десерт"));
                 //-------------------------------------------------------------------------------------------------------------
                 tx.executeSql(strInsertProduct("Хлеб белый"));
-                tx.executeSql(strInsertProduct("Хлеб темвый"));
+                tx.executeSql(strInsertProduct("Хлеб темный"));
                 tx.executeSql(strInsertProduct("Булочки"));
                 tx.executeSql(strInsertProduct("Сушки"));
                 tx.executeSql(strInsertProduct("Лаваш"));
