@@ -247,7 +247,7 @@ function deleteCategorieById(id, callBack) {
 function selectProductCHK(callBack) {
     var db = openDatabase();
     db.transaction(function (tx) {
-        tx.executeSql("select * from vrows where is_checked = 1 order by id desc;", [], function (tx, res) {
+        tx.executeSql("select * from vrows where is_checked = 1 order by value_w desc;", [], function (tx, res) {
             callBack(res);
         }, function (tx, error) {
             console.log('SELECT error: ' + error.message);
