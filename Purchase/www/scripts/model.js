@@ -342,7 +342,8 @@ function createTablesWithCheck(isReload) {
                 tx.executeSql(strInsertType("Специи и приправы"));
                 tx.executeSql(strInsertType("Десерт"));
                 tx.executeSql(strInsertType("Хлеб"));
-                tx.executeSql(strInsertType("Моющие и химия"));
+                tx.executeSql(strInsertType("Бытовая химия"));
+                tx.executeSql(strInsertType("Ванные пренадлежности"));
                 tx.executeSql("CREATE UNIQUE INDEX 'ix_name' on types ('name' ASC);");
                 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 tx.executeSql("DROP TABLE IF EXISTS product;");
@@ -498,18 +499,20 @@ function createTablesWithCheck(isReload) {
                 tx.executeSql(strInsertProduct("Лаваш"));
                 tx.executeSql(strInsertRelation("Хлеб"));
                 //-------------------------------------------------------------------------------------------------------------
-                tx.executeSql(strInsertProduct("Мыло"));
-                tx.executeSql(strInsertProduct("Зубная паста"));
-                tx.executeSql(strInsertProduct("Шампунь для волос"));
                 tx.executeSql(strInsertProduct("Сода"));
                 tx.executeSql(strInsertProduct("Моющее для ванны"));
                 tx.executeSql(strInsertProduct("Моющее для посуды"));
                 tx.executeSql(strInsertProduct("Моющее для туалета"));
                 tx.executeSql(strInsertProduct("Моющее для пола"));
-                tx.executeSql(strInsertRelation("Моющие и химия"));
+                tx.executeSql(strInsertRelation("Бытовая химия"));
                 //-------------------------------------------------------------------------------------------------------------
+                tx.executeSql(strInsertProduct("Мыло"));
+                tx.executeSql(strInsertProduct("Зубная паста"));
+                tx.executeSql(strInsertProduct("Шампунь для волос"));
                 tx.executeSql(strInsertProduct("Лезвия для бритвы"));
-                tx.executeSql(strInsertRelation("---Разное---"));
+                tx.executeSql(strInsertProduct("Пена для бритья"));
+                tx.executeSql(strInsertProduct("Крем для бритья"));
+                tx.executeSql(strInsertRelation("Ванные пренадлежности"));
                 //-------------------------------------------------------------------------------------------------------------
                 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 tx.executeSql("CREATE INDEX 'ix_value_w' on product ('value_w' ASC);");
