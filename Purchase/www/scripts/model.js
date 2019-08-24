@@ -26,6 +26,7 @@ var BTN_ADD_CATEG = 108;
 var BTN_EDT_CATEG = 109;
 var BTN_CATEG_VIEW = 110;
 var BTN_CATEG_VIEW_DETAIL = 111;
+var BTN_FIND_VIEW = 200;
 
 var BTN_BACKUP_EXPORT = 1000;
 var BTN_BACKUP_IMPORT = 1001;
@@ -270,7 +271,8 @@ function setProductCheckBox(id, checked) {
 function selectFindProductAll(searchText, callBack) {
     var db = openDatabase();
     db.transaction(function (tx) {
-        tx.executeSql("select * from vrows where (value_w like'%" + searchText + "%') order by value_w desc;", [], function (tx, res) {
+        var search = searchText.toLowerCase();
+        tx.executeSql("select * from vrows where (lower(value_w) like'%" + search + "%') order by value_w desc;", [], function (tx, res) {
             callBack(res);
         }, function (tx, error) {
             console.log('SELECT error: ' + error.message);
@@ -332,7 +334,7 @@ function createTablesWithCheck(isReload) {
                 tx.executeSql(strInsertType("Зелень"));
                 tx.executeSql(strInsertType("Фрукты"));
                 tx.executeSql(strInsertType("Рыба"));
-                tx.executeSql(strInsertType("Молочка"));
+                tx.executeSql(strInsertType("Молочные"));
                 tx.executeSql(strInsertType("Напитки"));
                 tx.executeSql(strInsertType("Спиртное"));
                 tx.executeSql(strInsertType("Крупы"));
@@ -340,6 +342,7 @@ function createTablesWithCheck(isReload) {
                 tx.executeSql(strInsertType("Специи и приправы"));
                 tx.executeSql(strInsertType("Десерт"));
                 tx.executeSql(strInsertType("Хлеб"));
+                tx.executeSql(strInsertType("Моющие и химия"));
                 tx.executeSql("CREATE UNIQUE INDEX 'ix_name' on types ('name' ASC);");
                 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 tx.executeSql("DROP TABLE IF EXISTS product;");
@@ -411,7 +414,7 @@ function createTablesWithCheck(isReload) {
                 tx.executeSql(strInsertProduct("Масло сливочное"));
                 tx.executeSql(strInsertProduct("Сир твердый"));
                 tx.executeSql(strInsertProduct("Творог"));
-                tx.executeSql(strInsertRelation("Молочка"));
+                tx.executeSql(strInsertRelation("Молочные"));
                 //-------------------------------------------------------------------------------------------------------------
                 tx.executeSql(strInsertProduct("Чай черный"));
                 tx.executeSql(strInsertProduct("Чай зеленый"));
@@ -466,6 +469,9 @@ function createTablesWithCheck(isReload) {
                 tx.executeSql(strInsertProduct("Масло растительное"));
                 tx.executeSql(strInsertProduct("Соль"));
                 tx.executeSql(strInsertProduct("Сахар"));
+                tx.executeSql(strInsertProduct("Горчица"));
+                tx.executeSql(strInsertProduct("Горчица порошок"));
+                tx.executeSql(strInsertProduct("Хрен"));
                 tx.executeSql(strInsertRelation("Специи и приправы"));
                 //-------------------------------------------------------------------------------------------------------------
                 tx.executeSql(strInsertProduct("Семки"));
@@ -491,6 +497,19 @@ function createTablesWithCheck(isReload) {
                 tx.executeSql(strInsertProduct("Сушки"));
                 tx.executeSql(strInsertProduct("Лаваш"));
                 tx.executeSql(strInsertRelation("Хлеб"));
+                //-------------------------------------------------------------------------------------------------------------
+                tx.executeSql(strInsertProduct("Мыло"));
+                tx.executeSql(strInsertProduct("Зубная паста"));
+                tx.executeSql(strInsertProduct("Шампунь для волос"));
+                tx.executeSql(strInsertProduct("Сода"));
+                tx.executeSql(strInsertProduct("Моющее для ванны"));
+                tx.executeSql(strInsertProduct("Моющее для посуды"));
+                tx.executeSql(strInsertProduct("Моющее для туалета"));
+                tx.executeSql(strInsertProduct("Моющее для пола"));
+                tx.executeSql(strInsertRelation("Моющие и химия"));
+                //-------------------------------------------------------------------------------------------------------------
+                tx.executeSql(strInsertProduct("Лезвия для бритвы"));
+                tx.executeSql(strInsertRelation("---Разное---"));
                 //-------------------------------------------------------------------------------------------------------------
                 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 tx.executeSql("CREATE INDEX 'ix_value_w' on product ('value_w' ASC);");

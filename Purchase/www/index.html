@@ -54,6 +54,38 @@
         
         <div role="main" class="ui-content">
 
+            <form id="frmListFind">
+                <div class="panel-body" id="frmListBody">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-xs-9 col-sm-9">
+                                <input type="search" class="form-control" id="searchText" placeholder="Поиск">
+                            </div>
+                            <div class="col-xs-2 col-sm-2">
+                                <button type="button" class="btn btn-default btn-success" onclick="onClickButtonFind();">Поиск</button>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12">
+                            <table style="table-layout:fixed" width="100%" id="gridProductFind">
+                                <thead>
+                                    <!--<tr>
+                                <th>
+                                </th>
+                                <th>
+                                    Value
+                                </th>
+                            </tr>-->
+                                </thead>
+                                <tbody id="tbodyid"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
             <form id="frmList">
                 <div class="panel-body" id="frmListBody">
                     <br>
@@ -266,10 +298,8 @@
         <div data-role="panel" id="left-panel" data-display="overlay" data-theme="b">
             <div class="form-group">
                 <ul data-role="listview" data-inset="true">
-                    <!--<li data-rel="close" onclick="onClickButton(BTN_ADD_PRODUCT)">Добавить наименование</li>-->
+                    <li data-rel="close" onclick="onClickButton(BTN_FIND_VIEW)">Поиск</li>
                     <li data-rel="close" onclick="onClickButton(BTN_CATEG_VIEW)">Категория</li>
-                    <!--<li data-rel="close" onclick="onClickButton(BTN_CATEG)">Категория (спр)</li>-->
-                    <!--<li data-rel="close" onclick="onClickButton(BTN_ALL_PRODUCT)">Покупки</li>-->
                     <li data-rel="close" onclick="onClickButton(BTN_CHK_PRODUCT)">Покупки (отмеченные)</li>
                     <li data-rel="close" onclick="onClickButton(BTN_BACKUP)">Backup</li>
                 </ul>
