@@ -468,7 +468,10 @@ function createTablesWithCheck(isReload) {
                 tx.executeSql(strInsertProduct("Ваниль"));
                 tx.executeSql(strInsertProduct("Майонез"));
                 tx.executeSql(strInsertProduct("Масло растительное"));
-                tx.executeSql(strInsertProduct("Соль"));
+                tx.executeSql(strInsertProduct("Соль каменная"));
+                tx.executeSql(strInsertProduct("Соль морская"));
+                tx.executeSql(strInsertProduct("Соль йодированная"));
+                tx.executeSql(strInsertProduct("Соль экстра"));
                 tx.executeSql(strInsertProduct("Сахар"));
                 tx.executeSql(strInsertProduct("Горчица"));
                 tx.executeSql(strInsertProduct("Горчица порошок"));
